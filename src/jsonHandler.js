@@ -5,7 +5,6 @@ const respondJSON = (request, response, status, object) => {
     response.write(JSON.stringify(object));
     response.end();
 };
-  
 
 const addBike = (request, response, params) => {
     const responseJSON = {
@@ -39,7 +38,6 @@ const addBike = (request, response, params) => {
         tires: params.tires,
     }
     return respondJSON(request, response, 201, responseJSON);
-    
 }
 
 const updateBikes = (request, response, params) => {
