@@ -27,7 +27,8 @@ const addBike = (request, response, params) => {
 
     let bikeNumber = 1; //sets to one for new users
     if(users[params.user]){
-        bikeNumber = Object.keys(users[params.user]).length + 1; //sets to the next number if the user exists
+         //sets to the next number if the user exists
+        bikeNumber = Object.keys(users[params.user]).length + 1;
     } else {
         users[params.user] = {};
     }
@@ -58,6 +59,7 @@ const updateBikes = (request, response, params) => {
         responseJSON.body = users[params.user];
         return responseJSON(request, response, 200, responseJSON);
     }
+    return false;
 }
 
 const notFound = () => {
