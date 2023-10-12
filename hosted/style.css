@@ -1,21 +1,55 @@
-html, body {
-    height: 100%;
+body {
+    background-color: #FEFFA5;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+div{
+    background-color: #6564DB; 
+    color:#110B11;
+    border-radius: 25px;
+    padding: 10px;
+}
+.controls{
+    background-color: #BBD5ED; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75vw;
+}
+form{
+    margin: 10px;
+}
+#forms{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#usersName{
+    font-size: large;  
+    border-radius: 5px;  
+}
+#bikeDisplay{
+    position: relative;
+    background-color: #302B27; 
+    height: 35vh;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    border-radius: 15px;
 }
-  
-#top {
-    text-align: center;
-    margin: 0 auto;
+.overlay{
+    position: absolute;
+    top:0;
+    left:0;
 }
-  
-#top h1 {
-    font-size: 2em;
+body > div{
+    background-color: #e9b5f3;
+    border-radius: 0px;
+    padding: 0px;
+    margin: 0px;
 }
-  
-#content {
-    margin-top: 100px;
-    font-size: 2em;
-    text-align: center;
+#canvas{
+    border:1px solid gray;
+    border-radius: 15px;
+    width: 100%;
+    height: 35vh;
 }

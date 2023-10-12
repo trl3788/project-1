@@ -42,22 +42,31 @@ const addBike = (request, response, params) => {
 }
 
 const updateBikes = (request, response, params) => {
+    console.log(params);
     const responseJSON = {
         message: 'Missing Username',
     }
     if(!params.user){
         responseJSON.id = 'addMissingUsername';
         return respondJSON(request, response, 400, responseJSON);
+    }else if(params.user === 'allBikes' && Object.keys(users).length !== 0){
+        responseJSON.message = 'Successfully retrieved';
+        responseJSON.body = users;
+        return respondJSON(request, response, 200, responseJSON);
+    }else if(params.user === 'allBikes' && Object.keys(users).length === 0){
+        responseJSON.message = 'No community bikes';
+        responseJSON.id = 'noBikesInCommunity';
+        return respondJSON(request, response, 404, responseJSON);
     }
-    if(!users[params.user]){
+    else if(!users[params.user]){
         responseJSON.message = 'No bikes found for that name';
         responseJSON.id = 'createNewBikes';
-        return respondJSON(request, response, 12345, responseJSON);
+        return respondJSON(request, response, 404, responseJSON);
     }
     if(users[params.user]){
         responseJSON.message = 'Successfully retrieved';
         responseJSON.body = users[params.user];
-        return responseJSON(request, response, 200, responseJSON);
+        return respondJSON(request, response, 200, responseJSON);
     }
     return false;
 }

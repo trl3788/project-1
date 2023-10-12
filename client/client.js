@@ -1,18 +1,22 @@
 const handleResponse = async (response) => {
     const content = document.getElementById('content');
+    console.log(response);
+    const jsonResponse = await response.json();
 
-    console.log(await response.json());
+    console.log(jsonResponse);
 }
 
 const sendFetch = async (updateForm, userName) => {
     const formAction = updateForm.getAttribute('action');
     const formMethod = updateForm.getAttribute('method');
 
-    const user = userName.value;
+    let user = userName.value;
+    if(updateForm.querySelector('#whoseBikes').value === 'community'){
+        user = 'allBikes';
+    }
 
-    
-    //const formData = `user=${user}`;
-    const response = await fetch(formAction, {
+    const formData = `user=${user}`;
+    const response = await fetch(`${formAction}?${formData}`, {
         method: formMethod,
         headers:{
             'accept':'application/json',
@@ -43,6 +47,7 @@ const init = () => {
     const bikeForm = document.getElementById('bikeForm');
     const updateForm = document.getElementById('updateForm');
     const userName = document.getElementById('usersName');
+    const cavnas = document.getElementById('canvas');
     
     const addBike = (e) => {
         e.preventDefault();
@@ -55,6 +60,12 @@ const init = () => {
         sendFetch(updateForm, userName);
         return false;
     }
+
+    const updateCanvas = (canvas) => {
+
+    }
+
+    updateCanvas(canvas);
 
     bikeForm.addEventListener('submit', addBike);
     updateForm.addEventListener('submit', updateBikes);

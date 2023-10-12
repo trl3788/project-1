@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Bike Builder</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-    <script src="/bundle.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/bundle.js" type="module"></script>
 </head>
 <body>
+    <section>
+        <div>
+            <h1>Bike Builder</h1>
+        </div>
+    </section>
     <section id="forms">
-        <input id="usersName" type="text" label="username" placeholder="User Name">
-        <h1>Bike Builder</h1>
         <p>Choose your parts and build your bike!</p>
-        <form id="bikeForm" action="/addBike" method="post">
-            <select id="bikeBody">
-                <option value="road">Road Bike</option>
-                <option value='mountain'>Mountain Bike</option>
-            </select>
-            <select id="bikeTire">
-                <option value="road">Road Tires</option>
-                <option value="mountain">Mountain Tires</option>
-            </select>
-            <input type="submit" value="Add Bike">
-        </form>
+        <div class="controls">
+            <input id="usersName" type="text" label="username" placeholder="UserName">
+            <br>
+            <form id="bikeForm" action="/addBike" method="post">
+                <select id="bikeBody">
+                    <option value="road">Road Bike</option>
+                    <option value='mountain'>Mountain Bike</option>
+                </select>
+                <select id="bikeTire">
+                    <option value="road">Road Tires</option>
+                    <option value="mountain">Mountain Tires</option>
+                </select>
+                <input type="submit" value="Add Bike">
+            </form>
+            <section id="bikeDisplay">
+                <img class="overlay" id="mtBike" src="/mountainBike.png">
+                <img class="overlay" id="rdBike" src="/roadBike.png">
+                <img class="overlay" id="mtTire" src="/mountainTires.png">
+                <img class="overlay" id="rdTire" src="/roadTires.png">
+            </section>
+            <canvas id="canvas"></canvas>
+        </div>
         <form id="updateForm" action="/updateBikes" method="get">
             <select id="whoseBikes">
                 <option value="user">My Bikes</option>
@@ -32,5 +47,6 @@
         </form>
     </section>
     <section id="content"></section>
+    <app-footer></app-footer>
 </body>
 </html>
