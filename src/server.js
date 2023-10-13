@@ -3,7 +3,6 @@ const url = require('url');
 const query = require('querystring');
 const jsonHandler = require('./jsonHandler.js');
 const htmlHandler = require('./htmlHandler.js');
-const canvas = require('./canvas.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 //#6564DB
 //#FEFFA5
@@ -47,8 +46,6 @@ const parseBody = (request, response, callback) => {
 const onRequest = (request, response) => {
     const parsedURL = url.parse(request.url);
     const params = query.parse(parsedURL.query);
-    
-    console.log(parsedURL);
 
     if(request.method === 'POST'){
         parseBody(request, response, jsonHandler.addBike);

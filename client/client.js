@@ -1,3 +1,5 @@
+const canvasHandler = require('./canvas.js');
+
 const handleResponse = async (response) => {
     const content = document.getElementById('content');
     console.log(response);
@@ -43,11 +45,17 @@ const sendPost = async (bikeForm, userName) => {
     handleResponse(response, formMethod);
 }
 
+const canvasUpdate = () => {
+
+}
+
 const init = () => {
     const bikeForm = document.getElementById('bikeForm');
     const updateForm = document.getElementById('updateForm');
     const userName = document.getElementById('usersName');
-    const cavnas = document.getElementById('canvas');
+    const canvas = document.getElementById('canvas');
+    const bikeSelect = document.getElementById('bikeBody');
+    const tireSelect = document.getElementById('bikeTire');
     
     const addBike = (e) => {
         e.preventDefault();
@@ -61,14 +69,22 @@ const init = () => {
         return false;
     }
 
-    const updateCanvas = (canvas) => {
-
+    const canvasUpdate = (e) => {
+        // if(e.target.id === 'bikeBody'){
+        //     canvasHandler.canvasUpdateBike(bikeSelect.value);
+        // }else if(e.target.id === 'bikeTire'){
+        //     canvasHandler.canvasUpdateTire(tireSelect.value);
+        // }
+        canvasHandler.drawBike(bikeSelect.value, tireSelect.value);
+        return false;
     }
 
-    updateCanvas(canvas);
+    canvasHandler.loadCanvas(canvas);
 
     bikeForm.addEventListener('submit', addBike);
     updateForm.addEventListener('submit', updateBikes);
+    bikeSelect.addEventListener('change', canvasUpdate);
+    tireSelect.addEventListener('change', canvasUpdate);
 }
 
 window.onload = init;
