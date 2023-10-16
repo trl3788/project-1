@@ -56,6 +56,7 @@ const init = () => {
     const canvas = document.getElementById('canvas');
     const bikeSelect = document.getElementById('bikeBody');
     const tireSelect = document.getElementById('bikeTire');
+    const colorSelect = document.getElementById('bikeColor');
     
     const addBike = (e) => {
         e.preventDefault();
@@ -75,7 +76,7 @@ const init = () => {
         // }else if(e.target.id === 'bikeTire'){
         //     canvasHandler.canvasUpdateTire(tireSelect.value);
         // }
-        canvasHandler.drawBike(bikeSelect.value, tireSelect.value);
+        canvasHandler.drawBike(bikeSelect.value, tireSelect.value, colorSelect.value);
         return false;
     }
 
@@ -85,6 +86,7 @@ const init = () => {
     updateForm.addEventListener('submit', updateBikes);
     bikeSelect.addEventListener('change', canvasUpdate);
     tireSelect.addEventListener('change', canvasUpdate);
+    colorSelect.addEventListener('change', canvasUpdate);
 }
 
 window.onload = init;

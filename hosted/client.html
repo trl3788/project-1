@@ -30,15 +30,16 @@
                     <option value="road">Road Tires</option>
                     <option value="mountain">Mountain Tires</option>
                 </select>
+                <input type="color" id="bikeColor" value="#ff0000">
                 <input type="submit" value="Add Bike">
             </form>
-            <section id="bikeDisplay">
-                <img class="overlay" id="mtBike" src="/mountainBike.png">
-                <img class="overlay" id="rdBike" src="/roadBike.png">
-                <img class="overlay" id="mtTire" src="/mountainTires.png">
-                <img class="overlay" id="rdTire" src="/roadTires.png">
-            </section>
-            <canvas id="canvas"></canvas>
+            <img class="overlay" id="mtBike" src="/mountainBike.png">
+            <img class="overlay" id="rdBike" src="/roadBike.png">
+            <img class="overlay" id="mtTire" src="/mountainTires.png">
+            <img class="overlay" id="rdTire" src="/roadTires.png">
+            <div class="canvasContainer" id="bikeAdd">
+                <canvas id="canvas"></canvas>
+            </div>
         </div>
         <form id="updateForm" action="/updateBikes" method="get">
             <select id="whoseBikes">

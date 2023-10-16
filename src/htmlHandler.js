@@ -36,7 +36,7 @@ const getMTTires = (request, response) => {
   serveFile(response, mtTires, 'image/png');
 }
 const getRDTires = (request, response) => {
-  serveFile(response, mtTires, 'image/png');
+  serveFile(response, rdTires, 'image/png');
 }
 
 module.exports = {
