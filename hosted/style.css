@@ -3,9 +3,17 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: 'Frank Ruhl Libre';
 }
 #header{
+    display: flex;
+    justify-content: center;
+    font-family: 'Orbitron';
     background-color: #6564DB; 
+    font-size: 1.5rem;
+}
+h1{
+    margin: 15px;
 }
 div{
     color:#110B11;
