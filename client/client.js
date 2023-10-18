@@ -2,10 +2,79 @@ const canvasHandler = require('./canvas.js');
 
 const handleResponse = async (response) => {
     const content = document.getElementById('content');
+    const responseArea = document.getElementById('response');
     console.log(response);
     const jsonResponse = await response.json();
-
     console.log(jsonResponse);
+
+    switch(response.status){
+        case 200:
+            content.innerHTML = "";
+            let keys = Object.keys(jsonResponse.body);
+            //if searching for just one owners bikes
+            if(jsonResponse.body[keys[0]].owner){
+                for (let i = 0; i < keys.length; i++){//TODO add a div here as a card-type box
+                    let current = jsonResponse.body[keys[i]];
+
+                    let currentDiv = document.createElement('div');
+                    currentDiv.setAttribute('class', 'bikeCard');
+                    let canvasDiv = document.createElement('div');
+                    canvasDiv.setAttribute('class', 'canvasDiv');
+                    let currentCanvas = document.createElement('canvas');
+                    currentCanvas.setAttribute('id',`display${keys[i]}`);
+
+                    currentDiv.innerHTML += `<h3>${jsonResponse.body[keys[i]].owner}'s Bike #${keys[i]}</h3>`
+
+                    document.body.appendChild(currentDiv);
+                    canvasDiv.appendChild(currentCanvas);
+                    currentDiv.appendChild(canvasDiv);
+                    content.appendChild(currentDiv);
+
+                    canvasHandler.loadCanvas(currentCanvas.id);
+                    canvasHandler.drawBike(current.body, current.tires, current.color);
+                }
+            }else{
+                //if searching for all bikes
+                for(let i = 0; i < keys.length; i++){
+                    let keysJ = Object.keys(jsonResponse.body[keys[i]]);
+                    for (let j = 0; j < keysJ.length; j++){//TODO add a div here as a card-type box
+                        console.log(jsonResponse.body[keys[i]][keysJ[j]]);
+                        let current = jsonResponse.body[keys[i]][keysJ[j]];
+
+                        let currentDiv = document.createElement('div');
+                        currentDiv.setAttribute('class', 'bikeCard');    
+                        let canvasDiv = document.createElement('div');
+                        canvasDiv.setAttribute('class', 'canvasDiv');    
+                        let currentCanvas = document.createElement('canvas');
+                        currentCanvas.setAttribute('id',`display${keys[i]}x${keysJ[j]}`);
+                        
+                        currentDiv.innerHTML += `<h3>${jsonResponse.body[keys[i]][keysJ[j]].owner}'s Bike #${keysJ[j]}</h3>`
+
+                        document.body.appendChild(currentDiv);
+                        canvasDiv.appendChild(currentCanvas);
+                        currentDiv.appendChild(canvasDiv);
+                        content.appendChild(currentDiv);
+    
+                        canvasHandler.loadCanvas(currentCanvas.id);
+                        canvasHandler.drawBike(current.body, current.tires, current.color);
+                    }
+                }
+            }
+            break;
+        case 201:
+        case 204:
+        case 400:
+            if(jsonResponse.id === 'noUsername'){
+                content.innerHTML = jsonResponse.message;
+            }else{
+                responseArea.innerHTML = jsonResponse.message;
+            }
+            break;
+        case 404:
+            content.innerHTML = jsonResponse.message;
+            break;            
+    }
+    
 }
 
 const sendFetch = async (updateForm, userName) => {
@@ -33,7 +102,7 @@ const sendPost = async (bikeForm, userName) => {
     const formMethod = bikeForm.getAttribute('method');
     const user = userName.value;
 
-    const formData = `user=${user}&body=${bikeForm.querySelector('#bikeBody').value}&tires=${bikeForm.querySelector('#bikeTire').value}`;
+    const formData = `user=${user}&body=${bikeForm.querySelector('#bikeBody').value}&tires=${bikeForm.querySelector('#bikeTire').value}&color=${bikeForm.querySelector('#bikeColor').value}`;
     const response = await fetch(formAction, {
         method: formMethod,
         headers: {
@@ -43,10 +112,6 @@ const sendPost = async (bikeForm, userName) => {
         body: formData,
     });
     handleResponse(response, formMethod);
-}
-
-const canvasUpdate = () => {
-
 }
 
 const init = () => {
@@ -76,17 +141,23 @@ const init = () => {
         // }else if(e.target.id === 'bikeTire'){
         //     canvasHandler.canvasUpdateTire(tireSelect.value);
         // }
+        canvasHandler.loadCanvas(canvas.id);
         canvasHandler.drawBike(bikeSelect.value, tireSelect.value, colorSelect.value);
         return false;
     }
 
-    canvasHandler.loadCanvas(canvas);
+    canvasHandler.loadCanvas(canvas.id);
 
     bikeForm.addEventListener('submit', addBike);
     updateForm.addEventListener('submit', updateBikes);
     bikeSelect.addEventListener('change', canvasUpdate);
     tireSelect.addEventListener('change', canvasUpdate);
     colorSelect.addEventListener('change', canvasUpdate);
+    /*
+    Resize event stuff was derived from: 
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event
+    */
+    window.addEventListener('resize', canvasUpdate);
 }
 
 window.onload = init;

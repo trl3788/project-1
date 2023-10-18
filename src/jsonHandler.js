@@ -7,22 +7,27 @@ const respondJSON = (request, response, status, object) => {
 };
 
 const addBike = (request, response, params) => {
+    let statusCode;
     const responseJSON = {
         message: 'Bike Frame and Tires both required',
     };
     if(!params.body || !params.tires){
         responseJSON.id = 'addMissingBikeParams';
-        return respondJSON(request, response, 400, responseJSON);
+        statusCode = 400;
+        return respondJSON(request, response, statusCode, responseJSON);
     }else if(!params.user){
         responseJSON.message = 'Missing Username';
         responseJSON.id = 'addMissingUsername';
-        return respondJSON(request, response, 400, responseJSON);
+        statusCode = 400;
+        return respondJSON(request, response, statusCode, responseJSON);
     }
 
     if(!users[params.user]){
         responseJSON.message = 'Bike created successfully';
+        statusCode = 201;
     }else if(users[params.user]){
         responseJSON.message = 'Bike created successfully and added to your collection';
+        statusCode = 204;
     }
 
     let bikeNumber = 1; //sets to one for new users
@@ -37,8 +42,9 @@ const addBike = (request, response, params) => {
         owner: params.user,
         body: params.body,
         tires: params.tires,
+        color: params.color,
     }
-    return respondJSON(request, response, 201, responseJSON);
+    return respondJSON(request, response, statusCode, responseJSON);
 }
 
 const updateBikes = (request, response, params) => {
@@ -47,7 +53,7 @@ const updateBikes = (request, response, params) => {
         message: 'Missing Username',
     }
     if(!params.user){
-        responseJSON.id = 'addMissingUsername';
+        responseJSON.id = 'noUsername';
         return respondJSON(request, response, 400, responseJSON);
     }else if(params.user === 'allBikes' && Object.keys(users).length !== 0){
         responseJSON.message = 'Successfully retrieved';
@@ -55,7 +61,7 @@ const updateBikes = (request, response, params) => {
         return respondJSON(request, response, 200, responseJSON);
     }else if(params.user === 'allBikes' && Object.keys(users).length === 0){
         responseJSON.message = 'No community bikes';
-        responseJSON.id = 'noBikesInCommunity';
+        responseJSON.id = 'noBikesInComm';
         return respondJSON(request, response, 404, responseJSON);
     }
     else if(!users[params.user]){

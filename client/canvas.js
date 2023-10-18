@@ -1,10 +1,19 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext('2d');
+let canvas;
+let ctx;
+const baseColor = '#FEFEE3';
 
-const loadCanvas = () => {
-    canvas.width = document.getElementById('bikeAdd').offsetWidth * .95;
-    canvas.height = document.getElementById('bikeAdd').offsetHeight * .95
-    ctx.fillStyle = '#FEFEE3';
+const loadCanvas = (canvasToLoad) => {
+    canvas = document.getElementById(canvasToLoad);
+    ctx = canvas.getContext('2d')
+    /*
+    Didn't explicitly use this code but it was a starting out point for where I ended up:
+    https://stackoverflow.com/questions/9251480/set-canvas-size-using-javascript
+    The following link helped me understand the offset____ properties as well: 
+    https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetWidth
+    */
+    canvas.width = canvas.parentElement.offsetWidth * .9;
+    canvas.height = canvas.parentElement.offsetHeight * .9;
+    ctx.fillStyle = baseColor;
     ctx.fillRect(0,0,canvas.getBoundingClientRect().width,canvas.getBoundingClientRect().height);
 }
 
@@ -28,28 +37,26 @@ const canvasUpdateTire = (tire) => {
 }
 
 const drawBike = (bike, tire, color) => {
-    loadCanvas();
     let body; 
     let tires;
     if(bike){
         body = canvasUpdateBike(bike);
-        ctx.drawImage(body, 2, 2);
 
+        /*
+        Portions of this code started with code from: 
+        https://stackoverflow.com/questions/45706829/change-color-image-in-canvas
+        As well as guidance from the following link:
+        https://www.w3schools.com/jsref/canvas_globalcompositeoperation.asp
+        */
         ctx.fillStyle = color;
         ctx.fillRect(0,0,canvas.width,canvas.height);
         ctx.globalCompositeOperation = 'destination-in';
-        ctx.drawImage(body, 0, 0)
-
-
-        // ctx.globalCompositeOperation = 'source-in';
-        // console.log(color);
-        // ctx.fillStyle = color;
-        // console.log(canvas.width);
-        // ctx.fillRect(0,0,canvas.width,canvas.height);
-        // ctx.globalCompositeOperation = 'source-over';
-
-
-
+        ctx.drawImage(body, canvas.width/2 -100, canvas.height/2 - 100);
+        ctx.globalCompositeOperation = 'destination-atop';
+        ctx.fillStyle = baseColor;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.globalCompositeOperation = 'source-over';
+        //
     }
     if(tire){
         if(tire === 'road'){
@@ -58,7 +65,7 @@ const drawBike = (bike, tire, color) => {
         else if(tire === 'mountain'){
             tires = document.getElementById('mtTire');
         }
-        ctx.drawImage(tires, 2, 2);
+        ctx.drawImage(tires, canvas.width/2 - 100, canvas.height/2 - 100);
     }
 }
 

@@ -4,37 +4,35 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
-div{
+#header{
     background-color: #6564DB; 
+}
+div{
     color:#110B11;
     border-radius: 25px;
     padding: 10px;
-}
-.controls{
-    background-color: #BBD5ED; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 75vw;
-}
-form{
-    margin: 10px;
+    gap: 5%;
 }
 #forms{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#usersName{
-    font-size: large;  
-    border-radius: 5px;  
+.controls{
+    background-color: #BBD5ED; 
+    display: flex;
+    width: 75vw;
+    font-size: larger;
 }
-#bikeDisplay{
-    position: relative;
-    background-color: #302B27; 
-    height: 35vh;
-    width: 100%;
-    border-radius: 15px;
+@media (max-width: 1000px){
+    .controls{
+        display: flex;
+        flex-direction: column;
+        width: 75vw;
+    }
+} 
+#usersName{
+    border-radius: 5px;  
 }
 .overlay{
     position: absolute;
@@ -42,15 +40,7 @@ form{
     left:0;
     visibility: hidden;
 }
-body > div{
-    background-color: #e9b5f3;
-    border-radius: 0px;
-    padding: 0px;
-    margin: 0px;
-}
 .canvasContainer{
-    border:1px solid gray;
-    border-radius: 15px;
     width: 100%;
     height: 35vh;
     display: flex;
@@ -59,4 +49,76 @@ body > div{
 }
 canvas{
     border-radius: 15px;
+}
+.bikeCard{
+    background-color:#d1eb3e;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#inputDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.leftHalf{
+    flex:1;
+    justify-content: center;
+}
+.rightHalf{
+    flex:1;
+    justify-content: center;
+}
+select{
+    font-size: large;
+    border-radius: 5px;
+}
+input{
+    font-size:larger;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#bikeForm{
+    display: flex;
+    flex-direction: column;
+}
+#response{
+    height: 20px;
+    color: #ff0000;
+    font-size: larger;
+}
+form > div{
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+}
+.canvasDiv{
+    padding: 0;
+    margin: 0;
+    height: 250px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#updateForm{
+    margin: 25px;
+    padding: 10px;
+    background-color: #BBD5ED; 
+    display: flex;
+    justify-content: center;
+    width: 50vw;
+    border-radius: 25px;
+    
 }

@@ -10,37 +10,46 @@
 </head>
 <body>
     <section>
-        <div>
+        <div id="header">
             <h1>Bike Builder</h1>
         </div>
     </section>
     <section id="forms">
-        <p>Choose your parts and build your bike!</p>
+        <h2>Choose your parts and build your bike!</h2>
         <div class="controls">
-            <input id="usersName" type="text" label="username" placeholder="UserName">
-            <br>
-            <form id="bikeForm" action="/addBike" method="post">
-                <select id="bikeBody">
-                    <option value="" disabled selected>Select a body</option>
-                    <option value="road">Road Bike</option>
-                    <option value='mountain'>Mountain Bike</option>
-                </select>
-                <select id="bikeTire">
-                    <option value="" disabled selected>Select tires</option>
-                    <option value="road">Road Tires</option>
-                    <option value="mountain">Mountain Tires</option>
-                </select>
-                <input type="color" id="bikeColor" value="#ff0000">
-                <input type="submit" value="Add Bike">
-            </form>
-            <img class="overlay" id="mtBike" src="/mountainBike.png">
-            <img class="overlay" id="rdBike" src="/roadBike.png">
-            <img class="overlay" id="mtTire" src="/mountainTires.png">
-            <img class="overlay" id="rdTire" src="/roadTires.png">
-            <div class="canvasContainer" id="bikeAdd">
+            <div id="inputDiv" class="leftHalf">
+                <input id="usersName" type="text" label="username" placeholder="UserName">
+                <form id="bikeForm" action="/addBike" method="post">
+                    <select id="bikeBody">
+                        <option value="" disabled selected>Select a body</option>
+                        <option value="road">Road Bike</option>
+                        <option value='mountain'>Mountain Bike</option>
+                    </select>
+                    <br>
+                    <select id="bikeTire">
+                        <option value="" disabled selected>Select tires</option>
+                        <option value="road">Road Tires</option>
+                        <option value="mountain">Mountain Tires</option>
+                    </select>
+                    <br>
+                    <div>
+                        <label for="bikeColor">Color: </label>
+                        <input type="color" id="bikeColor" value="#ff0000">    
+                    </div>
+                    <br>
+                    <input type="submit" value="Add Bike">
+                </form>
+                <div id="response"></div>
+                <img class="overlay" id="mtBike" src="/mountainBike.png">
+                <img class="overlay" id="rdBike" src="/roadBike.png">
+                <img class="overlay" id="mtTire" src="/mountainTires.png">
+                <img class="overlay" id="rdTire" src="/roadTires.png">
+            </div>
+            <div class="canvasContainer rightHalf" id="bikeAdd">
                 <canvas id="canvas"></canvas>
             </div>
         </div>
+        
         <form id="updateForm" action="/updateBikes" method="get">
             <select id="whoseBikes">
                 <option value="user">My Bikes</option>
@@ -49,7 +58,9 @@
             <input type="submit" value="Update Bikes">
         </form>
     </section>
-    <section id="content"></section>
+    <section id="content">
+        
+    </section>
     <app-footer></app-footer>
 </body>
 </html>
