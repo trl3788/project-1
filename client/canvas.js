@@ -15,6 +15,7 @@ const loadCanvas = (canvasToLoad) => {
     canvas.height = canvas.parentElement.offsetHeight * .9;
     ctx.fillStyle = baseColor;
     ctx.fillRect(0,0,canvas.getBoundingClientRect().width,canvas.getBoundingClientRect().height);
+    //
 }
 
 const canvasUpdateBike = (bike) => {
@@ -41,7 +42,6 @@ const drawBike = (bike, tire, color) => {
     let tires;
     if(bike){
         body = canvasUpdateBike(bike);
-
         /*
         Portions of this code started with code from: 
         https://stackoverflow.com/questions/45706829/change-color-image-in-canvas

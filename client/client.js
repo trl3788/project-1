@@ -3,19 +3,20 @@ const canvasHandler = require('./canvas.js');
 const handleResponse = async (response) => {
     const content = document.getElementById('content');
     const responseArea = document.getElementById('response');
-    console.log(response);
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
-
+    let jsonResponse;
+    if(response.status !== 204){
+        jsonResponse = await response.json();
+    }
     switch(response.status){
         case 200:
             content.innerHTML = "";
             let keys = Object.keys(jsonResponse.body);
             //if searching for just one owners bikes
             if(jsonResponse.body[keys[0]].owner){
-                for (let i = 0; i < keys.length; i++){//TODO add a div here as a card-type box
+                for (let i = 0; i < keys.length; i++){
                     let current = jsonResponse.body[keys[i]];
 
+                    //create elements
                     let currentDiv = document.createElement('div');
                     currentDiv.setAttribute('class', 'bikeCard');
                     let canvasDiv = document.createElement('div');
@@ -25,6 +26,7 @@ const handleResponse = async (response) => {
 
                     currentDiv.innerHTML += `<h3>${jsonResponse.body[keys[i]].owner}'s Bike #${keys[i]}</h3>`
 
+                    //piece the elements together
                     document.body.appendChild(currentDiv);
                     canvasDiv.appendChild(currentCanvas);
                     currentDiv.appendChild(canvasDiv);
@@ -35,12 +37,14 @@ const handleResponse = async (response) => {
                 }
             }else{
                 //if searching for all bikes
+                //through users
                 for(let i = 0; i < keys.length; i++){
                     let keysJ = Object.keys(jsonResponse.body[keys[i]]);
-                    for (let j = 0; j < keysJ.length; j++){//TODO add a div here as a card-type box
-                        console.log(jsonResponse.body[keys[i]][keysJ[j]]);
+                    //through users bikes
+                    for (let j = 0; j < keysJ.length; j++){
                         let current = jsonResponse.body[keys[i]][keysJ[j]];
 
+                        //create elements
                         let currentDiv = document.createElement('div');
                         currentDiv.setAttribute('class', 'bikeCard');    
                         let canvasDiv = document.createElement('div');
@@ -50,6 +54,7 @@ const handleResponse = async (response) => {
                         
                         currentDiv.innerHTML += `<h3>${jsonResponse.body[keys[i]][keysJ[j]].owner}'s Bike #${keysJ[j]}</h3>`
 
+                        //piece them together
                         document.body.appendChild(currentDiv);
                         canvasDiv.appendChild(currentCanvas);
                         currentDiv.appendChild(canvasDiv);
@@ -61,8 +66,10 @@ const handleResponse = async (response) => {
                 }
             }
             break;
-        case 201:
         case 204:
+            responseArea.innerText = "Bike added to collection";
+            break;
+        case 201:
         case 400:
             if(jsonResponse.id === 'noUsername'){
                 content.innerHTML = jsonResponse.message;
@@ -74,7 +81,6 @@ const handleResponse = async (response) => {
             content.innerHTML = jsonResponse.message;
             break;            
     }
-    
 }
 
 const sendFetch = async (updateForm, userName) => {
@@ -136,18 +142,12 @@ const init = () => {
     }
 
     const canvasUpdate = (e) => {
-        // if(e.target.id === 'bikeBody'){
-        //     canvasHandler.canvasUpdateBike(bikeSelect.value);
-        // }else if(e.target.id === 'bikeTire'){
-        //     canvasHandler.canvasUpdateTire(tireSelect.value);
-        // }
         canvasHandler.loadCanvas(canvas.id);
         canvasHandler.drawBike(bikeSelect.value, tireSelect.value, colorSelect.value);
         return false;
     }
 
     canvasHandler.loadCanvas(canvas.id);
-
     bikeForm.addEventListener('submit', addBike);
     updateForm.addEventListener('submit', updateBikes);
     bikeSelect.addEventListener('change', canvasUpdate);

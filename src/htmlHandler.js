@@ -24,27 +24,27 @@ const getCSS = (request, response) => {
 
 const getBundle = (request, response) => {
   serveFile(response, bundle, 'application/javascript');
-}
+};
 
 const getMTBike = (request, response) => {
   serveFile(response, mtBike, 'image/png');
-}
+};
 const getRDBike = (request, response) => {
   serveFile(response, rdBike, 'image/png');
-}
+};
 const getMTTires = (request, response) => {
   serveFile(response, mtTires, 'image/png');
-}
+};
 const getRDTires = (request, response) => {
   serveFile(response, rdTires, 'image/png');
-}
+};
 
 module.exports = {
   getIndex,
   getCSS,
   getBundle,
-  getMTBike, 
-  getRDBike, 
-  getMTTires, 
+  getMTBike,
+  getRDBike,
+  getMTTires,
   getRDTires,
 };
